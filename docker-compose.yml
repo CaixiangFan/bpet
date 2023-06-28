@@ -1,0 +1,91 @@
+version: '3.9'
+
+services:
+  web:
+    build:
+      context: ./front
+      target: runner
+    volumes:
+      - ./front:/app
+      - ./front/node_modules:/app/node_modules
+    # command: yarn next:dev web
+    ports:
+      - "3006:3006"
+    env_file:
+      - ./front/.env
+    depends_on:
+      - gateway
+    container_name: bpet-frontend
+
+  gateway:
+    build:
+      context: ./back/gateway
+      target: production
+    volumes:
+      - ./back/gateway:/app
+      - ./back/gateway/node_modules:/app/node_modules
+    command: yarn start:dev
+    ports:
+      - "3005:3005"
+    container_name: bpet-gateway
+    # depends_on:
+    #   - admin
+    #   - etk
+    #   - poolmarket
+    #   - registry
+
+    admin:
+      build:
+        context: ./back/admin
+        target: production
+      volumes:
+        - ./back/admin:/app
+        - ./back/admin/node_modules:/app/node_modules
+      command: yarn start:dev
+      ports:
+        - "3001:3001"
+      env_file:
+        - ./back/admin/.env
+      # depends_on:
+      #   - registry
+
+    etk:
+      build:
+        context: ./back/etk
+        target: production
+      volumes:
+        - ./back/etk:/app
+        - ./back/etk/node_modules:/app/node_modules
+      command: yarn start:dev
+      ports:
+        - "3004:3004"
+      env_file:
+        - ./back/etk/.env
+
+    poolmarket:
+      build:
+        context: ./back/poolmarket
+        target: production
+      volumes:
+        - ./back/poolmarket:/app
+        - ./back/poolmarket/node_modules:/app/node_modules
+      command: yarn start:dev
+      ports:
+        - "3003:3003"
+      env_file:
+        - ./back/poolmarket/.env
+      depends_on:
+        - registry
+
+    registry:
+      build:
+        context: ./back/register
+        target: production
+      volumes:
+        - ./back/register:/app
+        - ./back/register/node_modules:/app/node_modules
+      command: yarn start:dev
+      ports:
+        - "3002:3002"
+      env_file:
+        - ./back/register/.env
