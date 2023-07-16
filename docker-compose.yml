@@ -1,4 +1,4 @@
-version: '3.9'
+version: "3.9"
 
 services:
   web:
@@ -34,58 +34,62 @@ services:
     #   - poolmarket
     #   - registry
 
-    admin:
-      build:
-        context: ./back/admin
-        target: production
-      volumes:
-        - ./back/admin:/app
-        - ./back/admin/node_modules:/app/node_modules
-      command: yarn start:dev
-      ports:
-        - "3001:3001"
-      env_file:
-        - ./back/admin/.env
-      # depends_on:
-      #   - registry
+  admin:
+    build:
+      context: ./back/admin
+      target: production
+    volumes:
+      - ./back/admin:/app
+      - ./back/admin/node_modules:/app/node_modules
+    command: yarn start:dev
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./back/.env
+    # depends_on:
+    #   - registry
+    container_name: bpet-admin
 
-    etk:
-      build:
-        context: ./back/etk
-        target: production
-      volumes:
-        - ./back/etk:/app
-        - ./back/etk/node_modules:/app/node_modules
-      command: yarn start:dev
-      ports:
-        - "3004:3004"
-      env_file:
-        - ./back/etk/.env
+  etk:
+    build:
+      context: ./back/etk
+      target: production
+    volumes:
+      - ./back/etk:/app
+      - ./back/etk/node_modules:/app/node_modules
+    command: yarn start:dev
+    ports:
+      - "3004:3004"
+    env_file:
+      - ./back/.env
+    container_name: bpet-etk
 
-    poolmarket:
-      build:
-        context: ./back/poolmarket
-        target: production
-      volumes:
-        - ./back/poolmarket:/app
-        - ./back/poolmarket/node_modules:/app/node_modules
-      command: yarn start:dev
-      ports:
-        - "3003:3003"
-      env_file:
-        - ./back/poolmarket/.env
-      depends_on:
-        - registry
+  poolmarket:
+    build:
+      context: ./back/poolmarket
+      target: production
+    volumes:
+      - ./back/poolmarket:/app
+      - ./back/poolmarket/node_modules:/app/node_modules
+    command: yarn start:dev
+    ports:
+      - "3003:3003"
+    env_file:
+      - ./back/.env
+    depends_on:
+      - registry
+    container_name: bpet-poolmarket
 
-    registry:
-      build:
-        context: ./back/register
-        target: production
-      volumes:
-        - ./back/register:/app
-        - ./back/register/node_modules:/app/node_modules
-      command: yarn start:dev
-      ports:
-        - "3002:3002"
-      env_file:
-        - ./back/register/.env
+  registry:
+    build:
+      context: ./back/register
+      target: production
+    volumes:
+      - ./back/register:/app
+      - ./back/register/node_modules:/app/node_modules
+    command: yarn start:dev
+    ports:
+      - "3002:3002"
+    env_file:
+      - ./back/.env
+    container_name: bpet-registry
