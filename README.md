@@ -6,7 +6,7 @@ Watch [this video](https://youtu.be/znqniwMcKd0) for a demonstration of the func
 - back: The backend of BPET created by `NestJs` provides all microservices including `admin, etk, poolmarket, and registry`. It provides services to frontend via a `gateway`.
 - contracts: BPET's smart contracts developed with `Hardhat` include `EnergyToken, Payment, PoolMarket, and Registry`.
 - front: The frontend web application developed with `NextJs`.
-
+![front end](bpet-home.png)
 # Deploy
 
 1. Check if local Besu blockchain network is running.
